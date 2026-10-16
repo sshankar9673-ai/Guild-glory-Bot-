@@ -38,6 +38,7 @@
             padding: 20px;
         }
 
+        /* Top Navigation Header matching user style */
         .top-navbar {
             width: 100%;
             max-width: 520px;
@@ -389,9 +390,7 @@
             border-radius: 20px;
             padding: 24px;
             width: 100%;
-            max-width: 450px;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-width: 400px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
         }
 
@@ -403,33 +402,17 @@
             letter-spacing: 1px;
         }
 
-        .account-slot-box {
-            background: rgba(3, 7, 18, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 12px;
-        }
-
-        .account-slot-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--accent-cyan);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 14px;
             text-align: left;
         }
 
         .form-group label {
             display: block;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-sub);
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             font-weight: 600;
         }
 
@@ -437,10 +420,10 @@
             width: 100%;
             background: #030712;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 10px;
+            border-radius: 10px;
+            padding: 12px;
             color: #fff;
-            font-size: 13px;
+            font-size: 14px;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -452,7 +435,7 @@
         .modal-actions {
             display: flex;
             gap: 10px;
-            margin-top: 16px;
+            margin-top: 20px;
         }
 
         .modal-btn {
@@ -478,10 +461,11 @@
 </head>
 <body>
 
+    <!-- Top Header Navigation Bar (Akdom Upore Screen-er Moto) -->
     <div class="top-navbar">
         <span class="nav-title">MAHIN CODEX</span>
         <div class="nav-actions">
-            <button class="top-btn" onclick="openAddAccountModal()">+ Add 4 Accounts</button>
+            <button class="top-btn" onclick="openAddAccountModal()">+ Add Account</button>
             <button id="pause-toggle-btn" class="top-btn stop-active" onclick="togglePauseAll()">Stop Bot</button>
         </div>
     </div>
@@ -559,66 +543,21 @@
         </div>
     </div>
 
-    <!-- Add Accounts Modal (4 IDs) -->
+    <!-- Add Account Modal -->
     <div class="modal-overlay" id="addAccountModal">
         <div class="modal-card">
-            <h3>Add 4 Guest Accounts</h3>
-            
-            <!-- Account 1 -->
-            <div class="account-slot-box">
-                <div class="account-slot-title">Account 1</div>
-                <div class="form-group">
-                    <label>UID</label>
-                    <input type="text" id="modalUid1" class="form-input" placeholder="Enter UID 1">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="modalPassword1" class="form-input" placeholder="Enter Password 1">
-                </div>
+            <h3>Add New Account</h3>
+            <div class="form-group">
+                <label>Account UID</label>
+                <input type="text" id="modalUidInput" class="form-input" placeholder="Enter UID">
             </div>
-
-            <!-- Account 2 -->
-            <div class="account-slot-box">
-                <div class="account-slot-title">Account 2</div>
-                <div class="form-group">
-                    <label>UID</label>
-                    <input type="text" id="modalUid2" class="form-input" placeholder="Enter UID 2">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="modalPassword2" class="form-input" placeholder="Enter Password 2">
-                </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="modalPasswordInput" class="form-input" placeholder="Enter Password">
             </div>
-
-            <!-- Account 3 -->
-            <div class="account-slot-box">
-                <div class="account-slot-title">Account 3</div>
-                <div class="form-group">
-                    <label>UID</label>
-                    <input type="text" id="modalUid3" class="form-input" placeholder="Enter UID 3">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="modalPassword3" class="form-input" placeholder="Enter Password 3">
-                </div>
-            </div>
-
-            <!-- Account 4 -->
-            <div class="account-slot-box">
-                <div class="account-slot-title">Account 4</div>
-                <div class="form-group">
-                    <label>UID</label>
-                    <input type="text" id="modalUid4" class="form-input" placeholder="Enter UID 4">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="modalPassword4" class="form-input" placeholder="Enter Password 4">
-                </div>
-            </div>
-
             <div class="modal-actions">
                 <button class="modal-btn btn-cancel" onclick="closeAddAccountModal()">Cancel</button>
-                <button class="modal-btn btn-submit" onclick="submitAddAccounts()">Save All</button>
+                <button class="modal-btn btn-submit" onclick="submitAddAccount()">Save</button>
             </div>
         </div>
     </div>
@@ -732,20 +671,15 @@
 
         function closeAddAccountModal() {
             document.getElementById('addAccountModal').style.display = 'none';
+            document.getElementById('modalUidInput').value = '';
+            document.getElementById('modalPasswordInput').value = '';
         }
 
-        async function submitAddAccounts() {
-            const accounts = [];
-            for (let i = 1; i <= 4; i++) {
-                const uid = document.getElementById(`modalUid${i}`).value.trim();
-                const password = document.getElementById(`modalPassword${i}`).value.trim();
-                if (uid && password) {
-                    accounts.push({ uid, password });
-                }
-            }
-
-            if (accounts.length === 0) {
-                alert('Please enter at least one account UID and Password.');
+        async function submitAddAccount() {
+            const uid = document.getElementById('modalUidInput').value.trim();
+            const password = document.getElementById('modalPasswordInput').value.trim();
+            if (!uid || !password) {
+                alert('Please enter both UID and Password');
                 return;
             }
 
@@ -753,18 +687,18 @@
                 const res = await fetch('/api/account/add', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ accounts })
+                    body: JSON.stringify({ uid, password })
                 });
                 const data = await res.json();
                 if (data.status === 'ok') {
-                    alert('All accounts added successfully!');
+                    alert('Account added successfully!');
                     closeAddAccountModal();
                     refreshAllData();
                 } else {
-                    alert('Error: ' + (data.error || 'Failed to add accounts'));
+                    alert('Error: ' + (data.error || 'Failed to add account'));
                 }
             } catch (err) {
-                console.error('Add accounts error:', err);
+                console.error('Add account error:', err);
             }
         }
 
